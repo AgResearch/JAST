@@ -1,5 +1,5 @@
 /**
- *  JAST (Java Assembling and Scaffolding Tool) is a program do assembling and scaffolding from paired-end Illumina files.
+ *  JAST (Java Assembling and Scaffolding Tool) is a program performs assembling and scaffolding from paired-end Illumina files.
     Copyright (C) 2014 Clément DELESTRE (cclementddel@gmail.com)
 
     This program is free software: you can redistribute it and/or modify
