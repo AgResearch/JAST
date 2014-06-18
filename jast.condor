@@ -1,5 +1,5 @@
 universe=java
-arguments = jast.JASTmain --bowmap bowMap --bowbuild bowBuild -l librairy.txt -r CC275e_TEMP_1.fastq -p CC275e_TEMP_2.fastq -o condorTryWithBowtienoMiddleSSPACEnoEXT --colombus colombusFile2 --ref Rhizobium_leguminosarum_bv_trifolii_wsm1325.GCA_000023185.1.21.dna.genome.Deux.fasta --sspace sspacefile --flexbar flexbarFile
+arguments = jast.JASTmain --bowmap bowMap --bowbuild bowBuild -l librairy.txt -r reads_1.fastq -p reads_2.fastq -o outputName --colombus colombusFile --ref reference.fasta --sspace sspacefile --flexbar flexbarFile
 executable = jast.jar
 jar_files = jast.jar
 Error   = JAST.$(Cluster).$(Process).stderr

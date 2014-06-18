@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project JAST">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/clement/Bureau/jast.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="jast.JASTmain"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="/home/clement/workspace/JAST/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/clement/Lib_Java/JSAP-2.1.jar"/>
+        </jar>
+    </target>
+</project>

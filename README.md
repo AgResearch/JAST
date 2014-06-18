@@ -23,6 +23,42 @@ use by JAST (see help option for more informations).
 
 To know how to use JAST, use '-h' or '--help' option. For example : java -jar jast.jar -h
 
+
+Extern library
+----------
+
+JAST use the JSAP library v2.1 downloaded in June 2014.
+
+More informations [here](http://www.martiansoftware.com/jsap/)
+
+
+
+GitHub Repository 
+-----------
+
+Here you can find :
+
+
+   * Directory :
+      * [javadoc](https://github.com/AgResearch/JAST/tree/master/Javadoc)
+      * [source code](https://github.com/AgResearch/JAST/tree/master/src)
+      * [Example of config files](https://github.com/AgResearch/JAST/tree/master/ExampleConfigFiles)
+
+   * Files at the root :
+
+      * JAR file
+      * buildJAST.xml : the ant script used to generate the jar file
+      * jast.zip containing both src and javadoc
+      * jast.condor : an example of how to use jast with condor
+    
+
+
+
+
+Contact
+-----------
+
+
 For any enquiries please [contact the author](mailto:cclementddel@gmail.com)
 
 Clement DELESTRE (c) 2014
