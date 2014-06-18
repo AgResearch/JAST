@@ -27,7 +27,7 @@ To know how to use JAST, use '-h' or '--help' option. For example : java -jar ja
 Extern library
 ----------
 
-JAST use the JSAP library v2.1 downloaded in June 2014.
+JAST use the JSAP library v2.1 downloaded in June 2014, under LGPL licence.
 
 More informations [here](http://www.martiansoftware.com/jsap/)
 
