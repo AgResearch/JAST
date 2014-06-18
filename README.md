@@ -47,7 +47,7 @@ Here you can find :
    * Files at the root :
 
       * JAR file
-      * buildJAST.xml : the ant script used to generate the jar file
+      * buildJAST.xml : the ant script used to generate the jar file (builded with Eclipse)
       * jast.zip containing both src and javadoc
       * jast.condor : an example of how to use jast with condor
     
