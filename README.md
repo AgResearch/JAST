@@ -6,8 +6,8 @@ Java Assembling and Scaffolding Tool
 
 
 JAST (Java Assembling and Scaffolding Tool) is a program do assembling and scaffolding from paired-end Illumina files. It uses following softwares :
-   *Flexbar [link](http://sourceforge.net/projects/flexbar/)
-   *A5 [link](http://code.google.com/p/ngopt/wiki/A5PipelineREADME)
+   * Flexbar [link](http://sourceforge.net/projects/flexbar/)
+   * A5 [link](http://code.google.com/p/ngopt/wiki/A5PipelineREADME)
    *Bowtie [link](http://bowtie-bio.sourceforge.net/index.shtml)
    *Velvet Optimizer [link](http://bioinformatics.net.au/software.velvetoptimiser.shtml)
    *SSPACE [link](http://www.baseclear.com/lab-products/bioinformatics-tools/)
