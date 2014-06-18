@@ -11,6 +11,8 @@ JAST (Java Assembling and Scaffolding Tool) is a program do assembling and scaff
    * Bowtie [link](http://bowtie-bio.sourceforge.net/index.shtml)
    * Velvet Optimizer [link](http://bioinformatics.net.au/software.velvetoptimiser.shtml)
    * SSPACE [link](http://www.baseclear.com/lab-products/bioinformatics-tools/)
+
+
 Please see their license agreements for further details and check they all are installed on your computer before using JAST.
 
 
