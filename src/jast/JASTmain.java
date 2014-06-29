@@ -135,14 +135,14 @@ public class JASTmain {
 		//Bowtie File Build
 		FlaggedOption bowtieConfigBuild = new FlaggedOption("Bowtie config Build")
 		.setStringParser(fsp) 
-		.setRequired(true) 
+		.setRequired(false) 
 		.setLongFlag("bowbuild");
 		bowtieConfigBuild.setHelp("Config file use for bowtie-build command.");
 
 		//Bowtie File Map
 		FlaggedOption bowtieConfigMap = new FlaggedOption("Bowtie config Map")
 		.setStringParser(fsp) 
-		.setRequired(true) 
+		.setRequired(false) 
 		.setLongFlag("bowmap");
 		bowtieConfigMap.setHelp("Config file use for bowtie-x command. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenBowtieMap));
 
@@ -153,12 +153,12 @@ public class JASTmain {
 		.setRequired(true) 
 		.setShortFlag('l')
 		.setLongFlag("sspacelib");
-		sspacelib.setHelp("SSPACE library file (see SSPACE doc, equivalent to file you specify with '-l' option).\nWarning : first line must contains only the 3 last columns : the other information (name and fastq file) will be writen in a file nammed with _JAST extension and will be nammed JASTlib and the flexbar results files will be added.");
+		sspacelib.setHelp("SSPACE library file (see SSPACE doc, equivalent to file you specify with '-l' option when you use SSPACE).\nPlease note that the first line must contains only the 3 last columns : the other information (name and fastq files) will be writen in a file nammed with _JAST extension and the library will be nammed JASTlib.");
 
 		// Flexbar
 		FlaggedOption flexbarFile = new FlaggedOption("flexbar config file")
 		.setStringParser(fsp) 
-		.setRequired(true) 
+		.setRequired(false) 
 		.setLongFlag("flexbar");
 		flexbarFile.setHelp("Flexbar config file. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenFlexbar));
 
@@ -172,7 +172,7 @@ public class JASTmain {
 		// SSPACE
 		FlaggedOption sspaceFile = new FlaggedOption("SSPACE config file")
 		.setStringParser(fsp) 
-		.setRequired(true) 
+		.setRequired(false) 
 		.setLongFlag("sspace");
 		sspaceFile.setHelp("SSPACE config file. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenSSPACE));
 
@@ -238,7 +238,7 @@ public class JASTmain {
 				contigsAfterColombus = new File(files[0]+"/contigs.fa");
 			}
 
-			SSPACEcommand sspaceFinal = new SSPACEcommand(config.getFile("SSPACE config file").toPath(), contigsAfterColombus.toPath(), 2,config.getString("Output file"),NewSSPACElib.toPath(),forbiddenSSPACE);
+			SSPACEcommand sspaceFinal = new SSPACEcommand(config.getFile("SSPACE config file").toPath(), contigsAfterColombus.toPath(),config.getString("Output file"),NewSSPACElib.toPath(),forbiddenSSPACE);
 			sspaceFinal.exec();
 			System.out.println("[JAST] Finsih ! output file : "+sspaceFinal.getOutputFile());
 

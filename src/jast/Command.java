@@ -87,6 +87,14 @@ public abstract class Command {
 		return outputFile;
 	}
 	/**
+	 * get the command
+	 * @return command
+	 */
+	public String getCommand(){
+		return command;
+	}
+	
+	/**
 	 * Main method that execut the command
 	 */
 	public void exec(){

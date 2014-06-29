@@ -27,7 +27,7 @@ public class BowtieMapCommand extends Command {
 	public BowtieMapCommand (Path config, Path genome,Path indexFile,Path readOne,Path readTwo,String [] arrayOfForbbidenOptions){
 		super(config,arrayOfForbbidenOptions);
 		command="bowtie2";
-		String outputName = genome.toString()+"_VSreads.sam";
+		String outputName = genome.toString().replaceAll("\\.fasta", "")+"_VSreads.sam";
 		totalCommand.add("-x");
 		totalCommand.add(indexFile.toString());
 		totalCommand.add("-q");
