@@ -43,6 +43,7 @@ Here you can find :
       * [javadoc](https://github.com/AgResearch/JAST/tree/master/Javadoc)
       * [source code](https://github.com/AgResearch/JAST/tree/master/src)
       * [Example of config files](https://github.com/AgResearch/JAST/tree/master/ExampleConfigFiles)
+      * [Documentation](https://github.com/AgResearch/JAST/tree/master/Doc)
 
    * Files at the root :
 
