@@ -51,36 +51,6 @@ import com.martiansoftware.jsap.stringparsers.FileStringParser;
 public class JASTmain {
 
 	/**
-	 * The SSPACE's file created will finish by this extension
-	 */
-	public static final String libSSPACEext="_JAST";
-	/**
-	 * Forbidden options for SSPACE command
-	 */
-	private static String[] forbiddenSSPACE={"-l","-s","-b"};
-	/**
-	 * Forbidden options for Colombus command
-	 */
-	private static String[] forbiddenColombus={"-f","-p"};
-	/**
-	 * Forbidden options for Flexbar command
-	 */
-	private static String[] forbiddenFlexbar={"-t","-r","-p"};
-	/**
-	 * Forbidden options for A5 command
-	 */
-	private static String[] forbiddenA5=null;
-	/**
-	 * Forbidden options for Bowtie build command
-	 */
-	private static String[] forbiddenBowtieIndex=null;
-	/**
-	 * Forbidden options for Bowtie-x command
-	 */
-	private static String[] forbiddenBowtieMap={"-x","-q","-1","-2","-S"};
-
-
-	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -144,7 +114,7 @@ public class JASTmain {
 		.setStringParser(fsp) 
 		.setRequired(false) 
 		.setLongFlag("bowmap");
-		bowtieConfigMap.setHelp("Config file use for bowtie-x command. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenBowtieMap));
+		bowtieConfigMap.setHelp("Config file use for bowtie-x command. All mandatory options must be specified except : "+printForbiddenOptions(Pipeline.forbiddenBowtieMap));
 
 
 		//SSPACE library file
@@ -160,25 +130,21 @@ public class JASTmain {
 		.setStringParser(fsp) 
 		.setRequired(false) 
 		.setLongFlag("flexbar");
-		flexbarFile.setHelp("Flexbar config file. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenFlexbar));
+		flexbarFile.setHelp("Flexbar config file. All mandatory options must be specified except : "+printForbiddenOptions(Pipeline.forbiddenFlexbar));
 
 		// Colombus
 		FlaggedOption colombusFile = new FlaggedOption("Colombus config file")
 		.setStringParser(fsp) 
 		.setRequired(true) 
 		.setLongFlag("colombus");
-		colombusFile.setHelp("Colombus config file. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenColombus));
+		colombusFile.setHelp("Colombus config file. All mandatory options must be specified except : "+printForbiddenOptions(Pipeline.forbiddenColombus));
 
 		// SSPACE
 		FlaggedOption sspaceFile = new FlaggedOption("SSPACE config file")
 		.setStringParser(fsp) 
 		.setRequired(false) 
 		.setLongFlag("sspace");
-		sspaceFile.setHelp("SSPACE config file. All mandatory options must be specified except : "+printForbiddenOptions(forbiddenSSPACE));
-
-
-
-
+		sspaceFile.setHelp("SSPACE config file. All mandatory options must be specified except : "+printForbiddenOptions(Pipeline.forbiddenSSPACE));
 
 		try {
 			jsap.registerParameter(help);
@@ -206,42 +172,8 @@ public class JASTmain {
 		}
 		System.out.println("[JAST] Starting "+JASTutils.appliName+"...");
 		if (config.success()) {
-			FlexbarCommand flexbar = new FlexbarCommand(config.getFile("flexbar config file").toPath(),config.getFile("First input reads").toPath(),config.getFile("Second input reads").toPath(),forbiddenFlexbar);
-			flexbar.exec();
-			A5Command a5 = new A5Command(null,flexbar.getOutputFile(),config.getString("Output file"),forbiddenA5);
-			a5.exec();
-			//We must create a new file for SSPACE
-			File NewSSPACElib = new File("");
-			try {
-				NewSSPACElib=computeSSPACELibrairie(config.getFile("SSPACE library").toPath(), flexbar.getOutputFile());
-			} catch (IOException e) {
-				System.err.println("[JAST_Error] I/O excpetion with file "+config.getFile("SSPACE library").getPath()+" and/or "+flexbar.getOutputFile());
-				e.printStackTrace();
-				System.err.println("[JAST_Error] System will exit.");
-				System.exit(1);
-			}
-
-			BowtieIndexCommand bowtieIndex=new BowtieIndexCommand(config.getFile("Bowtie config Build").toPath(), config.getFile("Reference file").toPath(),forbiddenBowtieIndex);
-			bowtieIndex.exec();
-			BowtieMapCommand bowtieMap=new BowtieMapCommand(config.getFile("Bowtie config Map").toPath(), config.getFile("Reference file").toPath(), bowtieIndex.getOutputFile() , flexbar.getOutputFile(),forbiddenBowtieMap);
-			bowtieMap.exec();
-			ColombusCommand colombus = new ColombusCommand(config.getFile("Colombus config file").toPath(), a5.getOutputFile(), config.getFile("Reference file").toPath(), bowtieMap.getOutputFile(), flexbar.getOutputFile(),config.getString("Output file"),forbiddenColombus);
-
-			colombus.exec();
-			File[] files=new File(".").listFiles(new Filter(colombus.getOutputFile().toString()));
-			File contigsAfterColombus=new File("");
-			if (files.length!=1){
-				System.err.println("[JAST_Error] Only one directory should match with this pattern : "+colombus.getOutputFile()+" (instead of "+files.length+"))\nIf directories exist beacause of early use, please either change the output name or delete the directory.\nSystem will exit");
-				System.exit(1);
-			}
-			else {
-				contigsAfterColombus = new File(files[0]+"/contigs.fa");
-			}
-
-			SSPACEcommand sspaceFinal = new SSPACEcommand(config.getFile("SSPACE config file").toPath(), contigsAfterColombus.toPath(),config.getString("Output file"),NewSSPACElib.toPath(),forbiddenSSPACE);
-			sspaceFinal.exec();
-			System.out.println("[JAST] Finsih ! output file : "+sspaceFinal.getOutputFile());
-
+			Pipeline p = new Pipeline(jsap,args);
+			p.runPipeline();
 		}
 		else {
 			for (Iterator errs = config.getErrorMessageIterator();
@@ -249,9 +181,7 @@ public class JASTmain {
 				System.err.println("[JAST_Error] : " + errs.next());
 			}
 		}
-
 	}
-
 
 	/**
 	 * Get string containing forbidden options. 
@@ -266,7 +196,6 @@ public class JASTmain {
 		return toReturn;
 	}
 
-
 	public static void displayUsage(JSAP jsap){
 		System.out.println(JASTutils.getCopyright());
 		System.out.println("Description : ");
@@ -277,27 +206,6 @@ public class JASTmain {
 		System.exit(2);
 	}
 
-
-	private static File computeSSPACELibrairie(Path library,Path flexbaRoot) throws IOException {
-		BufferedReader br =  Files.newBufferedReader(library,StandardCharsets.UTF_8);
-		File newLib = new File(library+libSSPACEext);
-		BufferedWriter writer = Files.newBufferedWriter(newLib.toPath(), StandardCharsets.UTF_8);
-		String linetemp;
-		boolean first=true;
-		while ((linetemp=br.readLine())!=null){
-			if (first){ // We only change the first line
-				String newLine = "JASTlib "+flexbaRoot+"_1.fastq " +flexbaRoot+"_2.fastq "+linetemp;
-				writer.write(newLine);
-				first=false;
-			}
-			else {
-				writer.write("\n"+linetemp);
-			}
-		}
-		br.close();
-		writer.close();
-		return newLib;
-	}
 	/**
 	 * Could be usefull to inform the user of what is "false" and what is "true".
 	 * @return rules
