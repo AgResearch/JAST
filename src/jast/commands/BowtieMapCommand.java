@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 
 public class BowtieMapCommand extends Command {
 
-	public BowtieMapCommand (Path config, Path genome,Path indexFile,Path readOne,Path readTwo,String [] arrayOfForbbidenOptions){
+	public BowtieMapCommand (Path config, Path genome,Path indexFile,Path readOne,String [] arrayOfForbbidenOptions){
 		super(config,arrayOfForbbidenOptions);
 		command="bowtie2";
 		String outputName = genome.toString().replaceAll("\\.fasta", "")+"_VSreads.sam";
@@ -32,9 +32,9 @@ public class BowtieMapCommand extends Command {
 		totalCommand.add(indexFile.toString());
 		totalCommand.add("-q");
 		totalCommand.add("-1");
-		totalCommand.add(readOne.toString());
+		totalCommand.add(readOne.toString()+"_1.fastq");
 		totalCommand.add("-2");
-		totalCommand.add(readTwo.toString());
+		totalCommand.add(readOne.toString()+"_2.fastq");
 		totalCommand.add("-S");
 		totalCommand.add(outputName);
 		outputFile=Paths.get(outputName);

@@ -223,7 +223,7 @@ public class JASTmain {
 
 			BowtieIndexCommand bowtieIndex=new BowtieIndexCommand(config.getFile("Bowtie config Build").toPath(), config.getFile("Reference file").toPath(),forbiddenBowtieIndex);
 			bowtieIndex.exec();
-			BowtieMapCommand bowtieMap=new BowtieMapCommand(config.getFile("Bowtie config Map").toPath(), config.getFile("Reference file").toPath(), bowtieIndex.getOutputFile() , config.getFile("First input reads").toPath(), config.getFile("Second input reads").toPath(),forbiddenBowtieMap);
+			BowtieMapCommand bowtieMap=new BowtieMapCommand(config.getFile("Bowtie config Map").toPath(), config.getFile("Reference file").toPath(), bowtieIndex.getOutputFile() , flexbar.getOutputFile(),forbiddenBowtieMap);
 			bowtieMap.exec();
 			ColombusCommand colombus = new ColombusCommand(config.getFile("Colombus config file").toPath(), a5.getOutputFile(), config.getFile("Reference file").toPath(), bowtieMap.getOutputFile(), flexbar.getOutputFile(),config.getString("Output file"),forbiddenColombus);
 
